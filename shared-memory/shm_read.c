@@ -1,3 +1,8 @@
+/*
+ * Alumno: Daniel Montes Guerrero
+ * Compilar: gcc shm_read.c -o read
+ */
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>
@@ -14,8 +19,7 @@ int main(){
 	printf("Read or create memory zone pointer\n");
 	shmid = shmget(llave, 25 * sizeof(int), IPC_CREAT | 0777);
 	vector = (int*)shmat(shmid, (void*)0, 0);
-	vector[10] = 12345;
+	printf("Valor: %d\n", vector[10]);
 	shmdt(vector);
-	//shmctl(shmid, IPC_RMID, 0);
 	return 0;
 }

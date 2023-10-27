@@ -1,3 +1,8 @@
+/*
+ * Alumno: Daniel Montes Guerrero
+ * Compilar: gcc main.c
+ */
+
 #include<stdio.h>
 #include<signal.h>
 

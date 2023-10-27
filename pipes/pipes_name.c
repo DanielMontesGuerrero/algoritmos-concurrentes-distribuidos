@@ -1,3 +1,8 @@
+/*
+ * Alumno: Daniel Montes Guerrero
+ * Compilar: gcc pipes_name.c
+ */
+
 #include<stdio.h>
 #include<unistd.h>
 #include<sys/types.h>

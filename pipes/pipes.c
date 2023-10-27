@@ -1,3 +1,8 @@
+/*
+ * Alumno: Daniel Montes Guerrero
+ * Compilar: gcc pipes.c
+ */
+
 #include<stdio.h>
 
 int main(){

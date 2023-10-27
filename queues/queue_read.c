@@ -1,3 +1,9 @@
+
+/*
+ * Alumno: Daniel Montes Guerrero
+ * Compilar: gcc queue_read.c -o read
+ */
+
 #include<sys/ipc.h>
 #include<sys/msg.h>
 #include<stdio.h>

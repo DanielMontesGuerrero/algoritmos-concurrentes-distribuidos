@@ -1,3 +1,9 @@
+
+/*
+ * Alumno: Daniel Montes Guerrero
+ * Compilar: gcc queue_write_v2.c -o write
+ */
+
 #include<sys/ipc.h>
 #include<sys/msg.h>
 #include<stdio.h>
