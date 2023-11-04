@@ -1,6 +1,6 @@
 /*
  * Alumno: Daniel Montes Guerrero
- * Ejecutar: gcc hilos.c && ./a.out
+ * Ejecutar: gcc hilos.c -lpthread && ./a.out
  */
 #include<stdio.h>
 #include<stdlib.h>
