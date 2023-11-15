@@ -1,3 +1,8 @@
+/*
+ * Alumno: Daniel Montes Guerrero
+ * Compilar: gcc prod_cons_pipes_v2.c -o prod_cons_pipes_v2
+ */
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<wait.h>

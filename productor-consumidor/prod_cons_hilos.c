@@ -1,3 +1,8 @@
+/*
+ * Alumno: Daniel Montes Guerrero
+ * Compilar: gcc prod_cons_hilos.c -o prod_cons_hilos -lpthread
+ */
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<wait.h>
@@ -6,7 +11,7 @@
 #include<unistd.h>
 #include<pthread.h>
 
-#define MAXN 1000
+#define MAXN 100
 
 int del_cons, del_prod;
 char Q_BUFF[MAXN];
@@ -14,7 +19,7 @@ int back;
 sem_t sem_b, sem_prod, sem_cons;
 
 void* productor(void* arg){
-	printf("Productor: %d", getpid());
+	printf("Productor: %d\n", getpid());
 	char* buff = (char*)malloc(100 * sizeof(char));
 	int cnt = 0;
 	int i;
@@ -25,10 +30,12 @@ void* productor(void* arg){
 
 		sem_wait(&sem_prod);
 		if(back + tam > MAXN){
+			sem_post(&sem_cons);
+			continue;
 		}
 		// region critica
 		sem_wait(&sem_b);
-		for(int i = 0; i < tam; i++){
+		for(i = 0; i < tam; i++){
 			Q_BUFF[back] = buff[i];
 			back++;
 		}
@@ -44,13 +51,15 @@ void* productor(void* arg){
 }
 
 void* consumidor(void* arg){
-	printf("Consumidor: %d", getpid());
-	char* buff = (char*)malloc(101 * sizeof(char));
+	printf("Consumidor: %d\n", getpid());
+	int read_len = 100;
+	char* buff = (char*)malloc((read_len + 1) * sizeof(char));
 	int i = 0;
 	int j = 0;
 	while(1){
-		sem_wait(&sem);
-		for(i = 0; i < 100 && i < back; i++){
+		sem_wait(&sem_cons);
+		sem_wait(&sem_b);
+		for(i = 0; i < read_len && i < back; i++){
 			buff[i] = Q_BUFF[i];
 		}
 		buff[i] = '\0';
@@ -59,7 +68,8 @@ void* consumidor(void* arg){
 			Q_BUFF[j] = Q_BUFF[i];
 		}
 		back = j;
-		sem_post(&sem);
+		sem_post(&sem_b);
+		sem_post(&sem_prod);
 
 		printf("\t\t\tLeyo: %s, %d\n", buff, bytes);
 		sleep(del_cons);
@@ -76,8 +86,14 @@ int main(int argc, char** argv){
 		del_cons = atoi(argv[2]);
 	}
 	printf("Delays: %d %d\n", del_prod, del_cons);
-	if(sem_init(&sem, 0, 1) < 0){
-		puts("Error creando el semaforo");
+	if(sem_init(&sem_prod, 0, 1) < 0){
+		puts("Error creando el semaforo prod");
+	}
+	if(sem_init(&sem_cons, 0, 0) < 0){
+		puts("Error creando el semaforo cons");
+	}
+	if(sem_init(&sem_b, 0, 1) < 0){
+		puts("Error creando el semaforo b");
 	}
 	
 	pthread_t h1, h2;
